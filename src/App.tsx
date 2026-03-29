@@ -21,15 +21,15 @@ export default function App() {
         transition={{ duration: 0.8 }}
         className="mb-8"
       >
-        <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+        <div className="relative w-32 h-32 mx-auto flex items-center justify-center">
           {/* Decorative background for logo */}
           <div className="absolute inset-0 bg-white/5 blur-xl rounded-full"></div>
-          <div className="relative border border-white/20 p-4 rounded-sm">
-             <div className="text-3xl font-serif tracking-tighter flex items-center justify-center border border-white/40 w-12 h-12">
-                <span className="relative -left-1">R</span>
-                <span className="relative -right-1 opacity-60">R</span>
-             </div>
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Rebecca Rieger Logo" 
+            className="relative w-full h-full object-contain"
+            referrerPolicy="no-referrer"
+          />
         </div>
       </motion.div>
 
