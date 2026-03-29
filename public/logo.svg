@@ -1,0 +1,14 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Oval Border -->
+  <rect x="75" y="25" width="350" height="450" rx="175" stroke="white" stroke-width="8"/>
+  
+  <!-- Monogram RR -->
+  <g transform="translate(100, 100) scale(0.8)">
+    <!-- First R -->
+    <path d="M50 300V50H150C200 50 230 80 230 130C230 180 200 210 150 210H50M150 210L230 300" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Second R (Intertwined) -->
+    <path d="M150 300V100H250C300 100 330 130 330 180C330 230 300 260 250 260H150M250 260L330 350" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+    <!-- Flourish -->
+    <path d="M20 200C20 200 100 150 250 250C400 350 480 300 480 300" stroke="white" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

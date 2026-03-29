@@ -25,7 +25,7 @@ export default function App() {
           {/* Decorative background for logo */}
           <div className="absolute inset-0 bg-white/5 blur-xl rounded-full"></div>
           <img 
-            src="/logo.png" 
+            src="/logo.svg" 
             alt="Rebecca Rieger Logo" 
             className="relative w-full h-full object-contain"
             referrerPolicy="no-referrer"
