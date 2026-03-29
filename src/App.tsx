@@ -64,35 +64,6 @@ export default function App() {
           <div className="h-[1px] w-48 mx-auto bg-white/20 mt-8"></div>
         </motion.section>
 
-        {/* Title Section */}
-        <motion.section 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="space-y-6"
-        >
-          <p className="text-[10px] md:text-xs tracking-[0.5em] uppercase text-white/50">
-            Proposta de
-          </p>
-          <h2 className="text-5xl md:text-8xl font-serif font-black tracking-tighter uppercase leading-none">
-            Consultoria
-          </h2>
-          <div className="space-y-2">
-            <p className="text-lg md:text-2xl font-serif italic text-white/90">
-              Implantação e Assessoria em Contratações Públicas
-            </p>
-            <p className="text-[10px] md:text-xs tracking-widest text-white/40 uppercase">
-              Lei 14.133/2021 &bull; Nova Lei de Licitações e Contratos
-            </p>
-          </div>
-        </motion.section>
-
-        {/* Decorative Divider */}
-        <div className="flex items-center justify-center gap-4 py-4">
-          <div className="h-[1px] w-16 bg-white/20"></div>
-          <div className="w-1.5 h-1.5 rotate-45 bg-white/40"></div>
-          <div className="h-[1px] w-16 bg-white/20"></div>
-        </div>
 
         {/* Specialization Section */}
         <motion.section 
