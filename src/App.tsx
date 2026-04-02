@@ -8,14 +8,52 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Mail, Phone, Instagram } from "lucide-react";
-import { motion } from "motion/react";
+import { Mail, Phone, Instagram, Loader2, CheckCircle2 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import React, { useState } from "react";
 
 export default function App() {
+  const [formData, setFormData] = useState({
+    nome: "",
+    telefone: "",
+    email: "",
+    mensagem: ""
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    // SUBSTITUA PELO SEU URL DO GOOGLE APPS SCRIPT
+    const SCRIPT_URL = "SEU_URL_AQUI";
+
+    try {
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Necessário para Google Apps Script
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      // Como usamos no-cors, não conseguimos ler a resposta JSON, 
+      // mas se não deu erro de rede, assumimos sucesso.
+      setStatus("success");
+      setFormData({ nome: "", telefone: "", email: "", mensagem: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
+  };
+
   return (
-    <main className="bg-[#4A1018] text-center selection:bg-white/20">
+    <main className="text-center selection:bg-white/20">
       {/* Hero Section - Full Viewport Height */}
-      <section className="min-h-screen flex flex-col items-center justify-center py-12 px-6 relative">
+      <section className="min-h-screen bg-[#4A1018] flex flex-col items-center justify-center py-12 px-6 relative">
         {/* Top Logo Section */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -27,8 +65,11 @@ export default function App() {
             {/* Decorative background for logo */}
             <div className="absolute inset-0 bg-white/5 blur-xl rounded-full"></div>
             <img 
-              src="/logo.svg" 
+              src="/logo.png" 
               alt="Rebecca Rieger Logo" 
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "https://picsum.photos/seed/logo/200/200";
+              }}
               className="relative w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />
@@ -48,7 +89,7 @@ export default function App() {
             <div className="h-[1px] w-12 bg-white/30"></div>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-serif tracking-[0.2em] uppercase font-medium">
+          <h1 className="text-4xl md:text-6xl font-serif tracking-[0.2em] uppercase font-medium text-white">
             Rebecca Rieger
           </h1>
           <div className="space-y-1">
@@ -85,38 +126,66 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* Scrollable Content Container */}
-      <div className="max-w-4xl mx-auto px-6 pb-24 space-y-24">
-        
-        {/* About Me Section */}
-        <motion.section 
+      {/* About Me Section - Lighter Background */}
+      <section className="bg-[#5D1A22] py-24 px-6">
+        <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1 }}
-          className="space-y-8 max-w-2xl mx-auto text-center pt-12"
+          className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 text-center md:text-left"
         >
-          <h2 className="text-2xl md:text-3xl font-serif tracking-widest uppercase text-white/90">
-            Quem sou eu
-          </h2>
-          <div className="space-y-4 text-sm md:text-base text-white/70 font-light leading-relaxed tracking-wide">
-            <p>
-              Rebecca Rieger Soares de Almeida é advogada, graduada em Direito pela Universidade Católica Dom Bosco (UCDB) e pós-graduada em Licitações e Contratações Públicas pelo Centro de Ensino Renato Saraiva (CERS).
-            </p>
-            <p>
-              Há mais de oito anos atua de forma especializada em licitações e contratos administrativos, reunindo experiência no Tribunal de Contas do Estado de Mato Grosso do Sul (TCE/MS) e na advocacia privada. Presta assessoramento jurídico a empresas que atuam ou desejam atuar no mercado de contratações públicas, com enfoque em segurança jurídica, estratégia competitiva e acompanhamento técnico em todas as etapas das licitações e da execução contratual.
-            </p>
+          {/* Profile Image Container */}
+          <div className="w-full md:w-1/2 max-w-md mx-auto">
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-white/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <img 
+                src="/Rebecca.jpg" 
+                alt="Rebecca Rieger" 
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://picsum.photos/seed/rebecca-rieger/800/800";
+                }}
+                className="relative w-full aspect-square object-cover border border-white/10 shadow-2xl"
+                referrerPolicy="no-referrer"
+              />
+              {/* Decorative frame element */}
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-white/20"></div>
+              <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-white/20"></div>
+            </div>
           </div>
-          <div className="h-[1px] w-24 mx-auto bg-white/10"></div>
-        </motion.section>
 
-        {/* Areas of Expertise Section */}
-        <motion.section 
+          {/* Text Content */}
+          <div className="w-full md:w-1/2 space-y-8">
+            <div className="space-y-4">
+              <h2 className="text-2xl md:text-4xl font-serif tracking-widest uppercase text-white/90">
+                Quem sou eu
+              </h2>
+              <div className="h-[1px] w-24 bg-white/20 mx-auto md:mx-0"></div>
+            </div>
+            
+            <div className="space-y-6 text-sm md:text-base text-white/70 font-light leading-relaxed tracking-wide">
+              <p>
+                Rebecca Rieger Soares de Almeida é advogada, graduada em Direito pela Universidade Católica Dom Bosco (UCDB) e pós-graduada em Licitações e Contratações Públicas pelo Centro de Ensino Renato Saraiva (CERS).
+              </p>
+              <p>
+                Há mais de oito anos atua de forma especializada em licitações e contratos administrativos, reunindo experiência no Tribunal de Contas do Estado de Mato Grosso do Sul (TCE/MS) e na advocacia privada. 
+              </p>
+              <p>
+                Presta assessoramento jurídico a empresas que atuam ou desejam atuar no mercado de contratações públicas, com enfoque em segurança jurídica, estratégia competitiva e acompanhamento técnico em todas as etapas das licitações e da execução contratual.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Areas of Expertise Section - Dark Background */}
+      <section className="bg-[#4A1018] py-24 px-6">
+        <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1 }}
-          className="w-full space-y-12"
+          className="max-w-4xl mx-auto space-y-12"
         >
           <div className="space-y-4">
             <h2 className="text-3xl md:text-4xl font-serif tracking-widest uppercase text-white/90">
@@ -193,34 +262,104 @@ export default function App() {
               </motion.div>
             ))}
           </div>
-        </motion.section>
-      </div>
+        </motion.div>
+      </section>
 
-      {/* Footer Contact Section */}
-      <motion.footer 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="w-full max-w-5xl mx-auto pb-12 px-6"
-      >
-        <div className="h-[1px] w-full bg-white/10 mb-8"></div>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-[10px] md:text-xs tracking-[0.2em] uppercase text-white/60">
-          <a href="tel:67981621752" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Phone size={14} className="opacity-50" />
-            (67) 98162-1752
-          </a>
-          <div className="hidden md:block h-4 w-[1px] bg-white/20"></div>
-          <a href="mailto:rebeccariegersoares@gmail.com" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Mail size={14} className="opacity-50" />
-            rebeccariegersoares@gmail.com
-          </a>
-          <div className="hidden md:block h-4 w-[1px] bg-white/20"></div>
-          <a href="https://instagram.com/rebecca_riegeradv" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
-            <Instagram size={14} className="opacity-50" />
-            @rebecca_riegeradv
-          </a>
-        </div>
-      </motion.footer>
+      {/* Contact Section - Lighter Background */}
+      <section className="bg-[#5D1A22] py-24 px-6">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto space-y-12"
+        >
+          <div className="space-y-6 text-center">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold tracking-widest uppercase">
+              <span className="block text-white/60 text-xl md:text-2xl mb-2">Entrar em</span>
+              <span className="text-white">Contato</span>
+            </h2>
+            <div className="h-[2px] w-16 bg-white/20 mx-auto"></div>
+            
+            <div className="space-y-4">
+              <a 
+                href="mailto:rebeccariegersoares@gmail.com" 
+                className="text-lg md:text-xl font-medium text-white hover:text-white/80 transition-colors"
+              >
+                rebeccariegersoares@gmail.com
+              </a>
+              <p className="text-sm md:text-base text-white/50 max-w-lg mx-auto font-light leading-relaxed">
+                Você merece um atendimento personalizado. Nosso maior propósito é contribuir para fazer o melhor por você e para seu negócio.
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-4">
+            <div className="space-y-4">
+              <input 
+                type="text" 
+                placeholder="Nome" 
+                required
+                value={formData.nome}
+                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                className="w-full bg-white/5 border border-white/10 p-4 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors"
+              />
+              <input 
+                type="tel" 
+                placeholder="Telefone" 
+                required
+                value={formData.telefone}
+                onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
+                className="w-full bg-white/5 border border-white/10 p-4 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors"
+              />
+              <input 
+                type="email" 
+                placeholder="E-mail" 
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full bg-white/5 border border-white/10 p-4 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors"
+              />
+              <textarea 
+                placeholder="Mensagem" 
+                rows={6}
+                required
+                value={formData.mensagem}
+                onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
+                className="w-full bg-white/5 border border-white/10 p-4 text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors resize-none"
+              ></textarea>
+            </div>
+            
+            <button 
+              type="submit"
+              disabled={status === "loading" || status === "success"}
+              className="w-full bg-white/10 hover:bg-white/20 disabled:bg-white/5 text-white uppercase tracking-[0.3em] text-xs py-5 transition-all font-medium border border-white/10 flex items-center justify-center gap-3"
+            >
+              {status === "loading" ? (
+                <>
+                  <Loader2 className="animate-spin" size={16} />
+                  Enviando...
+                </>
+              ) : status === "success" ? (
+                <>
+                  <CheckCircle2 size={16} className="text-green-400" />
+                  Mensagem Enviada!
+                </>
+              ) : status === "error" ? (
+                "Erro ao enviar. Tente novamente."
+              ) : (
+                "Enviar Mensagem"
+              )}
+            </button>
+          </form>
+
+          {/* Social Links Mini Footer */}
+          <div className="pt-12 flex flex-col md:flex-row items-center justify-center gap-6 text-[10px] tracking-[0.2em] uppercase text-white/40 border-t border-white/5">
+            <a href="tel:67981621752" className="hover:text-white transition-colors">(67) 98162-1752</a>
+            <div className="hidden md:block h-3 w-[1px] bg-white/10"></div>
+            <a href="https://instagram.com/rebecca_riegeradv" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">@rebecca_riegeradv</a>
+          </div>
+        </motion.div>
+      </section>
     </main>
   );
 }
