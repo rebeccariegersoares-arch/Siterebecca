@@ -67,11 +67,6 @@ export default function App() {
             <img 
               src="/logo.png" 
               alt="Rebecca Rieger Logo" 
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "https://picsum.photos/seed/logo/200/200";
-              }}
-              className="relative w-full h-full object-contain"
-              referrerPolicy="no-referrer"
             />
           </div>
         </motion.div>
