@@ -65,7 +65,7 @@ export default function App() {
             {/* Decorative background for logo */}
             <div className="absolute inset-0 bg-white/5 blur-xl rounded-full"></div>
             <img 
-              src="/logo.png" 
+              src="./logo.png" 
               alt="Rebecca Rieger Logo" 
               onError={(e) => {
                 (e.target as HTMLImageElement).src = "https://picsum.photos/seed/logo/200/200";
