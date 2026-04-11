@@ -135,7 +135,7 @@ export default function App() {
             <div className="relative group">
               <div className="absolute -inset-4 bg-white/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <img 
-                src="/Rebecca.jpg" 
+                src="/Rebecca.jpeg" 
                 alt="Rebecca Rieger" 
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = "https://picsum.photos/seed/rebecca-rieger/800/800";
