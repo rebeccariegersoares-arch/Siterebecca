@@ -26,7 +26,7 @@ export default function App() {
     setStatus("loading");
 
     // SUBSTITUA PELO SEU URL DO GOOGLE APPS SCRIPT
-    const SCRIPT_URL = "SEU_URL_AQUI";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw70Qs6yzQQepa-fsx8wTIIvuHctIhxj2R3qyEBchxb5TvFxN7oCB_dQjGjKBmnHcF_/exec";
 
     try {
       const response = await fetch(SCRIPT_URL, {
@@ -67,6 +67,11 @@ export default function App() {
             <img 
               src="/logo.png" 
               alt="Rebecca Rieger Logo" 
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "https://picsum.photos/seed/logo/200/200";
+              }}
+              className="relative w-full h-full object-contain"
+              referrerPolicy="no-referrer"
             />
           </div>
         </motion.div>
@@ -135,7 +140,7 @@ export default function App() {
             <div className="relative group">
               <div className="absolute -inset-4 bg-white/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <img 
-                src="/rebecca.jpeg" 
+                src="/Rebecca.jpg" 
                 alt="Rebecca Rieger" 
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = "https://picsum.photos/seed/rebecca-rieger/800/800";
